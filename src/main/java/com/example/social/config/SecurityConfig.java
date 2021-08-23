@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -76,6 +75,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .getBuilder("facebook")
             .clientId(clientId)
             .clientSecret(clientSecret)
+            .scope(
+                "public_profile",
+                "email",
+                "user_birthday",
+                "user_gender"
+            )
+            .userInfoUri("https://graph.facebook.com/me?fields=id,name,email,picture,gender,birthday")
             .build();
     }
 }
