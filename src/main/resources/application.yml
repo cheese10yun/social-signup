@@ -15,3 +15,18 @@ spring:
                     google:
                         client-id: "xxx"
                         client-secret: "xxx"
+
+
+    jpa:
+        database: mysql
+        show-sql: true
+        generate-ddl: true
+        open-in-view: false
+        hibernate:
+            ddl-auto: create
+
+    datasource:
+        url: jdbc:mysql://localhost:3366/social
+        username: root
+        password:
+        driver-class-name: com.mysql.cj.jdbc.Driver

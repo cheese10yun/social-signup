@@ -2,6 +2,7 @@ package com.example.social.config;
 
 import java.util.Arrays;
 import java.util.List;
+
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +24,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final Environment environment;
     private final String registration = "spring.security.oauth2.client.registration.";
+    private final FacebookOauth2UserService facebookOauth2UserService;
+    private final GoogleOAuth2UserService googleOAuth2UserService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -35,6 +38,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .oauth2Login(oauth2 -> oauth2
                 .clientRegistrationRepository(clientRegistrationRepository())
                 .authorizedClientService(authorizedClientService())
+                .userInfoEndpoint(user -> user
+                    .oidcUserService(googleOAuth2UserService)  // google 인증, OpenID Connect 1.0
+                    .userService(facebookOauth2UserService) // facebook 인증, OAuth2 통신
+                )
             )
         ;
     }
